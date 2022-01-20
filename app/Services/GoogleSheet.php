@@ -13,12 +13,14 @@ class GoogleSheet
 
     private $client;
 
+    private $sheet_name;
+
     private $googleSheetService;
 
-    public function __construct()
+    public function __construct($sheet_name='Sheet1')
     {
         $this->spreadSheetId = config('datastudio.google_sheet_id');
-
+        $this->sheet_name=$sheet_name;
         $this->client = new Google_Client();
         $this->client->setAuthConfig(storage_path('credentials.json'));
         $this->client->addScope("https://www.googleapis.com/auth/spreadsheets");
@@ -29,7 +31,7 @@ class GoogleSheet
     public function readGoogleSheet()
     {
         $dimensions = $this->getDimensions($this->spreadSheetId);
-        $range = 'Sheet1!A1:' . $dimensions['colCount'];
+        $range = $this->sheet_name.'!A1:' . $dimensions['colCount'];
 
         $data = $this->googleSheetService
             ->spreadsheets_values
@@ -50,7 +52,8 @@ class GoogleSheet
             'valueInputOption' => 'USER_ENTERED',
         ];
 
-        $range = "A" . ($dimensions['rowCount'] + 1);
+        $range = $this->sheet_name."!A" . ($dimensions['rowCount'] + 1);
+
 
         return $this->googleSheetService
             ->spreadsheets_values
@@ -61,7 +64,7 @@ class GoogleSheet
     {
         $rowDimensions = $this->googleSheetService->spreadsheets_values->batchGet(
             $spreadSheetId,
-            ['ranges' => 'Sheet1!A:A', 'majorDimension' => 'COLUMNS']
+            ['ranges' => $this->sheet_name.'!A:A', 'majorDimension' => 'COLUMNS']
         );
 
         //if data is present at nth row, it will return array till nth row
@@ -76,8 +79,9 @@ class GoogleSheet
 
         $colDimensions = $this->googleSheetService->spreadsheets_values->batchGet(
             $spreadSheetId,
-            ['ranges' => 'Sheet1!1:1', 'majorDimension' => 'ROWS']
+            ['ranges' => $this->sheet_name.'!1:1', 'majorDimension' => 'ROWS']
         );
+
 
         //if data is present at nth col, it will return array till nth col
         //if all column values are empty, it returns null

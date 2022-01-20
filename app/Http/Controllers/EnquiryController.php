@@ -14,7 +14,7 @@ class EnquiryController extends Controller
      */
     public function index()
     {
-
+        return view('welcome');
     }
 
     /**
@@ -22,9 +22,9 @@ class EnquiryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function feedback()
     {
-
+        return view('feedback');
     }
 
     /**
@@ -42,6 +42,17 @@ class EnquiryController extends Controller
         $msg="Name: ".$request->name." %0a Phone: ".$request->phone." %0a Test Result : ".$request->test_result." %0a No Of Tifin : ".$request->no_tifin."%0a Time : ".implode(',',$request->time)." %0a Address :".$request->address." %0a Start from : ".$request->starting_from." %0a Ending to :  ".$request->ending_to." %0a";
         return redirect("https://wa.me/918780899424?text=".$msg);
         return redirect()->back();
+    }
+
+    public function storeFeedback(Request $request)
+    {
+        $Feedbacksheet=new \App\Services\GoogleSheet('Feedback');
+        $values = [
+            [$request->name, $request->phone,$request->number_of_tifin,$request->quality,$request->hygiene,$request->panchuality,$request->remarks],
+        ];
+        $savedData = $Feedbacksheet->saveDataToSheet($values);
+         $msg="Name: ".$request->name." %0a Phone: ".$request->phone." %0a Number Of Tifin : ".$request->number_of_tifin." %0a No Of Rating %0a Quality : ".$request->quality."%0a Hygiene : ".$request->hygiene." %0a Panchuality :".$request->panchuality." %0a Remark : ".$request->remarks." %0a";
+         return redirect("https://wa.me/918780899424?text=".$msg);
     }
 
     /**

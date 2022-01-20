@@ -27,8 +27,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/',function() {
-    return view('welcome');
-});
-
+// inquiry
+Route::get('/',[EnquiryController::class,'index'])->name('Enq.index');
 Route::post('/store',[EnquiryController::class,'store'])->name('Enq.Store');
+// feedback
+Route::get('/feedback',[EnquiryController::class,'feedback'])->name('Feedback.index');
+Route::post('/storeFeedback',[EnquiryController::class,'storeFeedback'])->name('Feedback.Store');
