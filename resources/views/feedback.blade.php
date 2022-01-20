@@ -142,7 +142,7 @@ padding-top: 5px;
                                     </div>
 
                                     <div class="form-group">
-                                        <label style="margin-left: 25px;"> Panchuality of the delivery guy ? </label>
+                                        <label style="margin-left: 25px;"> Punctuality of the delivery guy ? </label>
                                         <div class="star-rating02 form-control">
                                             <span class="fa fa-star-o" data-rating="1"></span>
                                             <span class="fa fa-star-o" data-rating="2"></span>

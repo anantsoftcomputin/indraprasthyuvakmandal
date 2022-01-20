@@ -51,7 +51,7 @@ class EnquiryController extends Controller
             [$request->name, $request->phone,$request->number_of_tifin,$request->quality,$request->hygiene,$request->panchuality,$request->remarks],
         ];
         $savedData = $Feedbacksheet->saveDataToSheet($values);
-         $msg="Name: ".$request->name." %0a Phone: ".$request->phone." %0a Number Of Tifin : ".$request->number_of_tifin." %0a No Of Rating %0a Quality : ".$request->quality."%0a Hygiene : ".$request->hygiene." %0a Panchuality :".$request->panchuality." %0a Remark : ".$request->remarks." %0a";
+         $msg="Name: ".$request->name." %0a Phone: ".$request->phone." %0a Number Of Tifin : ".$request->number_of_tifin." %0a No Of Rating %0a Quality : ".$request->quality."%0a Hygiene : ".$request->hygiene." %0a Punctuality :".$request->panchuality." %0a Remark : ".$request->remarks." %0a";
          return redirect("https://wa.me/918780899424?text=".$msg);
     }
 
